@@ -12,6 +12,8 @@ import java.util.Set;
  */
 public class ContainsDuplicate {
 
+    // Time complexity: O(n^2)
+    // Space complexity: O(1)
     public boolean containsDuplicateBruteForce(int[] nums) {
         for (int i = 0; i < nums.length; i++) {
             for (int j = i + 1; j < nums.length; j++) {
@@ -25,12 +27,14 @@ public class ContainsDuplicate {
         return false;
     }
 
+    // Time complexity: O(n)
+    // Space complexity: O(n)
     public boolean containsDuplicateOptimal(int[] nums) {
-        Set<Integer> visitedNumbers = new HashSet<>();
+        Set<Integer> numsHashSet = new HashSet<>();
         for (int num : nums) {
             // .add() returns false if the element was already present in the set,
             // so we can return true if it returns false
-            if (!visitedNumbers.add(num)) {
+            if (!numsHashSet.add(num)) {
                 return true;
             }
         }
