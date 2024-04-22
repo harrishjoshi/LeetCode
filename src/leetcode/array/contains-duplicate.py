@@ -15,7 +15,13 @@ class Solution:
         return False
 
     def containsDuplicateOptimal(self, nums) -> bool:
-        return len(nums) != len(set(nums))
+        visitedNumbersMap = dict()
+        for i in range(len(nums)):
+            if nums[i] in visitedNumbersMap.keys():
+                return True
+            visitedNumbersMap[nums[i]] = i
+
+        return False
 
 # test cases
 test = Solution()
