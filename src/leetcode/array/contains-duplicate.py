@@ -7,6 +7,8 @@ class Solution:
     Output: true
     """
 
+    # Time complexity: O(n^2)
+    # Space complexity: O(1)
     def containsDuplicateBruteForce(self, nums) -> bool:
         for i in range(len(nums)):
             for j in range(i + 1, len(nums)):
@@ -14,13 +16,14 @@ class Solution:
                     return True
         return False
 
+    # Time complexity: O(n)
+    # Space complexity: O(n)
     def containsDuplicateOptimal(self, nums) -> bool:
-        visitedNumbersMap = dict()
-        for i in range(len(nums)):
-            if nums[i] in visitedNumbersMap.keys():
+        numsHashSet = set()
+        for n in nums:
+            if n in numsHashSet:
                 return True
-            visitedNumbersMap[nums[i]] = i
-
+            numsHashSet.add(n)
         return False
 
 # test cases
