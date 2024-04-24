@@ -23,7 +23,7 @@ public class TwoSum {
             }
         }
 
-        return new int[]{};
+        return null;
     }
 
     public int[] twoSumOptimal(int[] nums, int target) {
@@ -37,7 +37,7 @@ public class TwoSum {
             complementIndicesMap.put(nums[i], i);
         }
 
-        return new int[]{};
+        return null;
     }
 
     public static void main(String[] args) {
