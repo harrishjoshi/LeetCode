@@ -33,7 +33,31 @@ class Solution:
 
         return sorted(s) == sorted(t)
 
+    def isAnagramOptimal(self, s: str, t: str):
+        # If the lengths of the strings are different, they can't be anagrams
+        if len(s) != len(t):
+            return False
+
+        # Create a list of 26 integers to store the count of each character
+        alphabet = [0] * 26
+        for char in s:
+            # Increment the count of the character in the alphabet list
+            # "a" is at index 0, "b" is at index 1, and so on
+            alphabet[ord(char) - ord('a')] += 1
+
+        for char in t:
+            # Decrement the count of the character in the alphabet list
+            alphabet[ord(char) - ord('a')] -= 1
+
+        # If the strings are anagrams, the alphabet list should have all 0s
+        for count in alphabet:
+            if count != 0:
+                return False
+
+        return True
+
 # test cases
 test = Solution()
 print(test.isAnagram("anagram", "nagaram"))
+print(test.isAnagramOptimal("ram", "mar"))
 print(test.isAnagramWithSorting("rat", "car"))

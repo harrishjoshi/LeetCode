@@ -57,9 +57,37 @@ public class ValidAnagram {
         return Arrays.equals(sArray, tArray);
     }
 
+    public boolean isAnagramOptimal(String s, String t) {
+        // If the lengths of the strings are different, they can't be anagrams
+        if (s.length() != t.length()) {
+            return false;
+        }
+
+        // Create an array of 26 characters to store the count of each character
+        int[] alphabet = new int[26];
+        for (int i = 0; i < s.length(); i++) {
+            // Increment the count of the character in the alphabet array
+            // "a" is at index 0, "b" is at index 1, and so on
+            alphabet[s.charAt(i) - 'a']++;
+        }
+
+        for (int i = 0; i < t.length(); i++) {
+            // Decrement the count of the character in the alphabet array
+            alphabet[t.charAt(i) - 'a']--;
+        }
+
+        // If the strings are anagrams, the alphabet array should have all 0s
+        for (int i : alphabet) {
+            if (i != 0) return false;
+        }
+
+        return true;
+    }
+
     public static void main(String[] args) {
         ValidAnagram va = new ValidAnagram();
         System.out.println(va.isAnagram("anagram", "nagaram"));
-        System.out.println(va.isAnagramWithSorting("rat", "car"));
+        System.out.println(va.isAnagram("ram", "mar"));
+        System.out.println(va.isAnagramOptimal("rat", "car"));
     }
 }
