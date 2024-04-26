@@ -1,3 +1,4 @@
+from collections import defaultdict
 import sys
 sys.path.append('src/leetcode/string')
 from valid_anagram import Solution as anagram
@@ -38,7 +39,30 @@ class Solution:
             grouped_anagrams.append(anagrams)
 
         return grouped_anagrams
+    
+    def groupAnagramsOptimal(self, strs):
+        # Create a dictionary to store the grouped anagrams
+        grouped_anagrams = defaultdict(list)
+
+        # Iterate through the list of strings
+        for s in strs:
+            # Create a list of 26 elements to store the count of each character
+            count = [0] * 26 # a...z
+
+            # Count the number of each character in the string
+            for c in s:
+                # Increment the count of the character
+                count[ord(c) - ord('a')] += 1
+
+            # Add the string to the grouped anagrams
+            #print(count)c
+            #print(tuple(count))
+            grouped_anagrams[tuple(count)].append(s)
+
+        # Return the grouped anagrams as a list
+        return list(grouped_anagrams.values())
 
 # Test Cases
 test = Solution()
 print(test.groupAnagramsBruteForce(["eat","tea","tan","ate","nat","bat"]))
+print(test.groupAnagramsOptimal(["eat","tea","tan","ate","nat","bat"]))
