@@ -2,8 +2,7 @@ package leetcode.array;
 
 import leetcode.string.ValidAnagram;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Given an array of strings strs, group the anagrams together. You can return the answer in any order.
@@ -52,10 +51,34 @@ public class GroupAnagrams {
         return groupedAnagrams;
     }
 
+    public List<List<String>> groupAnagramsOptimal(String[] strs) {
+        // Map to store the grouped anagrams
+        Map<String, List<String>> groupedAnagrams = new HashMap<>();
+
+        for (String s : strs) {
+            // Sort the string to group the anagrams
+            char[] chars = s.toCharArray();
+            Arrays.sort(chars);
+
+            // Add the string to the group
+            String key = new String(chars);
+            if (!groupedAnagrams.containsKey(key)) {
+                groupedAnagrams.put(key, new ArrayList<>());
+            }
+            groupedAnagrams.get(key).add(s);
+        }
+
+        // Return the grouped anagrams as a list
+        return new ArrayList<>(groupedAnagrams.values());
+    }
+
     public static void main(String[] args) {
-        String[] strs = {"eat", "tea", "tan", "ate", "nat", "bat"};
         GroupAnagrams groupAnagrams = new GroupAnagrams();
-        List<List<String>> groupedAnagrams = groupAnagrams.groupAnagramsBruteForce(strs);
-        System.out.println(groupedAnagrams);
+        List<List<String>> groupedAnagramsBruteForce =
+                groupAnagrams.groupAnagramsBruteForce(new String[]{"eat", "tea", "tan", "ate", "nat", "bat"});
+        List<List<String>> groupedAnagramsOptimal =
+                groupAnagrams.groupAnagramsOptimal(new String[]{"eat", "tea", "tan", "ate", "nat", "bat"});
+        System.out.println(groupedAnagramsBruteForce);
+        System.out.println(groupedAnagramsOptimal);
     }
 }
