@@ -57,7 +57,7 @@ public class ValidAnagram {
         return Arrays.equals(sArray, tArray);
     }
 
-    public boolean isAnagramOptimal(String s, String t) {
+    public static boolean isAnagramOptimal(String s, String t) {
         // If the lengths of the strings are different, they can't be anagrams
         if (s.length() != t.length()) {
             return false;
@@ -87,7 +87,7 @@ public class ValidAnagram {
     public static void main(String[] args) {
         ValidAnagram va = new ValidAnagram();
         System.out.println(va.isAnagram("anagram", "nagaram"));
-        System.out.println(va.isAnagram("ram", "mar"));
-        System.out.println(va.isAnagramOptimal("rat", "car"));
+        System.out.println(va.isAnagramWithSorting("ram", "mar"));
+        System.out.println(isAnagramOptimal("rat", "car"));
     }
 }
