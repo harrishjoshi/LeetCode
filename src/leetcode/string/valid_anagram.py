@@ -57,7 +57,7 @@ class Solution:
         return True
 
 # test cases
-test = Solution()
-print(test.isAnagram("anagram", "nagaram"))
-print(test.isAnagramOptimal("ram", "mar"))
-print(test.isAnagramWithSorting("rat", "car"))
+# test = Solution()
+# print(test.isAnagram("anagram", "nagaram"))
+# print(test.isAnagramOptimal("ram", "mar"))
+# print(test.isAnagramWithSorting("rat", "car"))
