@@ -1,8 +1,6 @@
 package leetcode.array;
 
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Given a non-empty array of integers, return the k most frequent elements.
@@ -50,9 +48,53 @@ public class TopKFrequent {
         return result;
     }
 
+    public int[] topKFrequentOptimal(int[] nums, int k) {
+        if (nums.length == k) {
+            return nums;
+        }
+
+        Map<Integer, Integer> numberCounts = new HashMap<>();
+        Map<Integer, List<Integer>> countFrequencies = new HashMap<>();
+
+        // Count the frequency of each element
+        for (int num : nums) {
+            numberCounts.put(num, numberCounts.getOrDefault(num, 0) + 1);
+        }
+
+        // Store the elements with the same frequency in a list
+        for (Map.Entry<Integer, Integer> entry : numberCounts.entrySet()) {
+            if (!countFrequencies.containsKey(entry.getValue())) {
+                countFrequencies.put(entry.getValue(), new ArrayList<>());
+            }
+
+            countFrequencies.get(entry.getValue()).add(entry.getKey());
+        }
+
+        // Initialize the result array with size k
+        int[] result = new int[k];
+        int resultIndex = 0;
+        // Iterate over the frequencies in descending order
+        for (int i = nums.length; i > 0; i--) {
+            if (countFrequencies.containsKey(i)) {
+                // Add the elements with the same frequency to the result
+                for (int num : countFrequencies.get(i)) {
+                    result[resultIndex++] = num;
+                    // Return the result if the k elements are found
+                    if (resultIndex == k) {
+                        return result;
+                    }
+                }
+            }
+        }
+
+        return result;
+    }
+
     public static void main(String[] args) {
         TopKFrequent kFrequent = new TopKFrequent();
-        int[] result = kFrequent.topKFrequentBruteForce(new int[]{4, 1, -1, 2, -1, 2, 3}, 2);
-        System.out.println(Arrays.toString(result));
+        int[] bruteForceResult = kFrequent.topKFrequentBruteForce(new int[]{1, 1, 1, 2, 2, 5}, 2);
+        int[] optimalResult = kFrequent.topKFrequentOptimal(new int[]{4, 1, -1, 2, -1, 2, 3}, 2);
+        System.out.println(Arrays.toString(bruteForceResult));
+        System.out.println(Arrays.toString(optimalResult));
     }
 }
