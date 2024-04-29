@@ -15,13 +15,29 @@ class Solution:
         for i in range(len(nums)):
             product = 1
             for j in range(len(nums)):
-                # Skip the same element multiplication
+                # Skip self multiplication
                 if i != j:
                     product *= nums[j]
             result.append(product)
 
         return result
 
+    def productExceptSelfOptimal(self, nums):
+        result = [1] * (len(nums))
+
+        prefix = 1
+        for i in range(len(nums)):
+            result[i] = prefix
+            prefix *= nums[i] 
+
+        postfix = 1
+        for i in range(len(nums) - 1, -1, -1):
+            result[i] *= postfix
+            postfix *= nums[i]
+
+        return result
+
 # Test Cases
 test = Solution()
-print(test.productExceptSelfBruteForce([-1,1,0,-3,3]))
+print(test.productExceptSelfBruteForce([-1, 1, 0, -3, 3]))
+print(test.productExceptSelfOptimal([1, 2, 3, 4]))
