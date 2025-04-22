@@ -69,10 +69,54 @@ public class RotateArray {
         }
     }
 
+    /**
+     * Rotates an array right by k positions using triple reverse approach
+     * Time: O(n), Space: O(1)
+     */
+    public static void solution3(int[] nums, int k) {
+        if (nums == null || nums.length == 0 || k < 0) {
+            throw new IllegalArgumentException("Invalid Args");
+        }
+
+        if (k > nums.length) {
+            k = k % nums.length;
+        }
+
+        int firstPartLength = nums.length - k;
+
+        // Reverse first n-k elements
+        reverse(nums, 0, firstPartLength - 1);
+
+        // Reverse last k elements
+        reverse(nums, firstPartLength, nums.length - 1);
+
+        // Reverse entire array
+        reverse(nums, 0, nums.length - 1);
+    }
+
+    /**
+     * Reverses elements between left and right indices (inclusive).
+     */
+    public static void reverse(int[] nums, int left, int right) {
+        if (nums.length == 1 || left >= right) {
+            return;
+        }
+
+        while (left < right) {
+            // Swap elements
+            int temp = nums[left];
+            nums[left] = nums[right];
+            nums[right] = temp;
+            left++;
+            right--;
+        }
+    }
+
     public static void main(String[] args) {
         var items = new int[]{1, 2, 3, 4, 5, 6, 7};
-        // solution1(items, 3);
-        solution2(items, 3);
+//        solution1(items, 3);
+//        solution2(items, 3);
+        solution3(items, 3);
         System.out.println(Arrays.toString(items));
     }
 }
