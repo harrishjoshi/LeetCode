@@ -14,12 +14,15 @@ import java.util.Map;
  */
 public class IsomorphicStrings {
 
-    public static boolean isIsomorphic(String s, String t) {
-        if (s == null || t == null) {
-            return false;
-        }
-
-        if (s.length() != t.length()) {
+    /**
+     * Checks if strings s and t are isomorphic using a HashMap for one-to-one mapping.
+     *
+     * @param s First string
+     * @param t Second string
+     * @return true if isomorphic, false otherwise
+     */
+    public static boolean isIsomorphic1(String s, String t) {
+        if (s == null || t == null || s.length() != t.length()) {
             return false;
         }
 
@@ -28,30 +31,32 @@ public class IsomorphicStrings {
             char c1 = s.charAt(i);
             char c2 = t.charAt(i);
 
-            // Check if c2 is already mapped to a different character (ensures one-to-one mapping)
+            // Check if c2 is mapped to a different character
             Character existingKey = getKey(charMap, c2);
             if (existingKey != null && existingKey != c1) {
                 return false;
             }
 
             if (charMap.containsKey(c1)) {
-                // Check if c1 consistently maps to c2
+                // Ensure c1 maps consistently to c2
                 if (c2 != charMap.get(c1)) {
                     return false;
                 }
             } else {
-                // Add new mapping from c1 to c2
+                // Add new mapping
                 charMap.put(c1, c2);
             }
         }
 
-        // True, if all the character mappings are consistent
         return true;
     }
 
     /**
-     * Retrieves the key from the map that maps to the given target value.
-     * Used to check for duplicate values in the map (reverse lookup).
+     * Gets the key mapped to the target value for reverse lookup.
+     *
+     * @param charMap The character mapping
+     * @param target  The value to find
+     * @return The key or null if not found
      */
     public static Character getKey(Map<Character, Character> charMap, Character target) {
         for (Map.Entry<Character, Character> entry : charMap.entrySet()) {
@@ -63,8 +68,35 @@ public class IsomorphicStrings {
         return null;
     }
 
+    /**
+     * Checks if strings s and t are isomorphic using arrays for mapping.
+     *
+     * @param s First string
+     * @param t Second string
+     * @return true if isomorphic, false otherwise
+     */
+    public static boolean isIsomorphic2(String s, String t) {
+        if (s == null || t == null || s.length() != t.length()) {
+            return false;
+        }
+
+        int[] mapS = new int[128]; // Tracks s chars
+        int[] mapT = new int[128]; // Tracks t chars
+
+        for (int i = 0; i < s.length(); i++) {
+            if (mapS[s.charAt(i)] != mapT[t.charAt(i)]) {
+                return false;
+            }
+
+            mapS[s.charAt(i)] = i + 1;
+            mapT[t.charAt(i)] = i + 1;
+        }
+
+        return true;
+    }
+
     public static void main(String[] args) {
-        System.out.println(isIsomorphic("foo", "bar"));
-        System.out.println(isIsomorphic("paper", "title"));
+        System.out.println(isIsomorphic1("foo", "bar"));
+        System.out.println(isIsomorphic2("paper", "title"));
     }
 }
